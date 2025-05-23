@@ -1,0 +1,30 @@
+[project]
+name = "mcp-testrail"
+version = "0.1.0"
+description = "MCP server for TestRail"
+authors = [{name = "Herson Oliveira", email = "herson.oliveira@h2o.ai"}]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastmcp>=2.4.0",
+    "httpx>=0.28.1",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3.5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+markers = [
+    "unit: marks tests as unit tests (fast, mocked)",
+    "integration: marks tests as integration tests (slow, requires real API)",
+    "slow: marks tests as slow running"
+]
+
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning"
+]
+
+addopts = "-v -s"
