@@ -885,8 +885,8 @@ class TestRailClient:
 
     def get_project_by_name(self, project_name: str) -> Optional[Dict]:
         """Helper method to find a project by name"""
-        projects = self.get_projects()
-        for project in projects:
+        result = self.get_projects()
+        for project in result["projects"]:
             if project.get("name") == project_name:
                 return project
         return None

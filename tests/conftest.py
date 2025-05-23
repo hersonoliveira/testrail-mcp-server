@@ -1,5 +1,7 @@
 import os
+
 import pytest
+
 from mcp_testrail.testrail_client import TestRailClient
 
 
@@ -37,3 +39,8 @@ def testrail_client():
         username=username,
         api_key=api_key,
     )
+
+
+@pytest.fixture
+def test_project_name():
+    return "Document AI"

@@ -30,3 +30,12 @@ class TestProjectIntegration:
             assert "name" in project
             assert isinstance(project["id"], int)
             assert isinstance(project["name"], str)
+
+    def test_get_project_by_name(
+        self, testrail_client: trclient, test_project_name: str
+    ):
+        response = testrail_client.get_project_by_name(test_project_name)
+
+        if response:
+            assert "id" in response
+            assert test_project_name == response["name"]
