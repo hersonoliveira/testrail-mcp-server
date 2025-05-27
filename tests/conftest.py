@@ -44,3 +44,22 @@ def testrail_client():
 @pytest.fixture
 def test_project_name():
     return "Document AI"
+
+
+@pytest.fixture
+def new_test_case(testrail_client: TestRailClient):
+    section_id = 4118  # testing_client section in the sandbox project
+    case_data = {
+        "title": "This is a test test case",
+        "type_id": 1,
+        "priority_id": 3,
+        "estimate": "3m",
+        "refs": "RF-1, RF-2",
+        "custom_steps_separated": [
+            {"content": "Step 1", "expected": "Expected Result 1"},
+            {"content": "Step 2", "expected": "Expected Result 2"},
+        ],
+    }
+    response = testrail_client.add_case(section_id=section_id, data=case_data)
+    yield response
+    testrail_client.delete_case(case_id=response["id"])

@@ -123,37 +123,38 @@ class TestRailClient:
         offset: Optional[int] = None,
     ) -> List[Dict]:
         """Get test cases for a project with optional filters"""
-        params = {}
-        if suite_id:
-            params["suite_id"] = suite_id
-        if section_id:
-            params["section_id"] = section_id
-        if created_after:
-            params["created_after"] = created_after
-        if created_before:
-            params["created_before"] = created_before
-        if created_by:
-            params["created_by"] = ",".join(map(str, created_by))
-        if milestone_id:
-            params["milestone_id"] = ",".join(map(str, milestone_id))
-        if priority_id:
-            params["priority_id"] = ",".join(map(str, priority_id))
-        if template_id:
-            params["template_id"] = ",".join(map(str, template_id))
-        if type_id:
-            params["type_id"] = ",".join(map(str, type_id))
-        if updated_after:
-            params["updated_after"] = updated_after
-        if updated_before:
-            params["updated_before"] = updated_before
-        if updated_by:
-            params["updated_by"] = ",".join(map(str, updated_by))
-        if limit:
-            params["limit"] = limit
-        if offset:
-            params["offset"] = offset
+        endpoint = f"get_cases/{project_id}"
 
-        return self._send_request("GET", f"get_cases/{project_id}", params=params)
+        if section_id:
+            endpoint += f"&section_id={section_id}"
+        if limit:
+            endpoint += f"&limit={limit}"
+        if suite_id:
+            endpoint += f"&suite_id={suite_id}"
+        if created_after:
+            endpoint += f"&created_after={created_after}"
+        if created_before:
+            endpoint += f"&created_before={created_before}"
+        if created_by:
+            endpoint += f"&created_by={','.join(map(str, created_by))}"
+        if milestone_id:
+            endpoint += f"&milestone_id={','.join(map(str, milestone_id))}"
+        if priority_id:
+            endpoint += f"&priority_id={','.join(map(str, priority_id))}"
+        if template_id:
+            endpoint += f"&template_id={','.join(map(str, template_id))}"
+        if type_id:
+            endpoint += f"&type_id={','.join(map(str, type_id))}"
+        if updated_after:
+            endpoint += f"&updated_after={updated_after}"
+        if updated_before:
+            endpoint += f"&updated_before={updated_before}"
+        if updated_by:
+            endpoint += f"&updated_by={','.join(map(str, updated_by))}"
+        if offset:
+            endpoint += f"&offset={offset}"
+
+        return self._send_request("GET", endpoint)
 
     def add_case(self, section_id: int, data: Dict) -> Dict:
         """Add a new test case to a section"""

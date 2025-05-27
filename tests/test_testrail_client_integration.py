@@ -12,8 +12,11 @@ Run with: pytest -m integration
 """
 
 import pytest
+from dotenv import load_dotenv
 
 from mcp_testrail.testrail_client import TestRailClient as trclient
+
+load_dotenv()
 
 
 @pytest.mark.integration
@@ -39,3 +42,20 @@ class TestProjectIntegration:
         if response:
             assert "id" in response
             assert test_project_name == response["name"]
+
+
+@pytest.mark.integration
+class TestCasesIntegration:
+    """Integration tests for cases methods"""
+
+    def test_get_cases_from_section(self, testrail_client: trclient):
+        project_id = 5  # sandbox
+        section_id = 206
+        response = testrail_client.get_cases(
+            project_id=project_id, section_id=section_id, limit=2
+        )
+        assert isinstance(response["cases"], list)
+        assert response["size"] == 2
+
+    def test_add_case(self, new_test_case):
+        assert new_test_case["title"] == "This is a test test case"
