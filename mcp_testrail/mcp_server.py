@@ -681,6 +681,14 @@ class TestRailMCPServer(FastMCP):
         # ========== SECTIONS ==========
 
         @self.tool()
+        def get_section_by_name(project_id: int, section_name: str):
+            """Find a section by name in a project"""
+            try:
+                return self.client.get_section_by_name(project_id, section_name)
+            except Exception as e:
+                return self._handle_error("get_section_by_name", e)
+
+        @self.tool()
         def get_sections(
             project_id: int,
             suite_id: Optional[int] = None,

@@ -551,6 +551,14 @@ class TestRailClient:
 
     # ========== SECTIONS ==========
 
+    def get_section_by_name(self, project_id: int, section_name: str) -> Optional[Dict]:
+        """Get a section by name in a project"""
+        response = self.get_sections(project_id)
+        for section in response["sections"]:
+            if section["name"] == section_name:
+                return section
+        return None
+
     def get_section(self, section_id: int) -> Dict:
         """Get a section by ID"""
         return self._send_request("GET", f"get_section/{section_id}")

@@ -59,3 +59,18 @@ class TestCasesIntegration:
 
     def test_add_case(self, new_test_case):
         assert new_test_case["title"] == "This is a test test case"
+
+
+@pytest.mark.integration
+class TestSectionsIntegration:
+    """Integration tests for sections methods"""
+
+    def test_get_section_by_name(self, testrail_client: trclient):
+        project_id = 5
+        section_name = "another_subsection"
+        response = testrail_client.get_section_by_name(
+            project_id=project_id, section_name=section_name
+        )
+        assert response is not None
+        assert "id" in response
+        assert response["name"] == section_name
